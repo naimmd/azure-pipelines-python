@@ -68,6 +68,14 @@ jobs:
     inputs:
       artifactFeeds: $(artifactFeed)
 
+      
+  - script: |
+      echo '>>>>>>>>>>>>>>>>>>>>>> Contents:'
+      ls .
+      echo '>>>>>>>>>>>>>>>>>>>>>> pwd:'
+      pwd
+    workingDirectory: $(srcDirectory)
+
   # Install the app in editable mode to install dependencies
   - bash: pip install -e .
     displayName: Install packages for app
