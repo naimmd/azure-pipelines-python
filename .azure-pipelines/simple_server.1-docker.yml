@@ -76,6 +76,11 @@ jobs:
       pwd
     workingDirectory: $(srcDirectory)
 
+
+  # Install the app in editable mode to install dependencies
+  - bash: python -m pip install -e src/simple_package
+    displayName: Install packages for app
+ 
   # Install the app in editable mode to install dependencies
   - bash: pip install -e .
     displayName: Install packages for app
