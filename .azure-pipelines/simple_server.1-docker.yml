@@ -75,14 +75,14 @@ jobs:
       pwd
     workingDirectory: $(srcDirectory)
   
+
+
   # Install the app in editable mode to install dependencies
-  - bash: python -m pip install -e src/simple_package
+  - bash: |
+      python -m pip install -e simple_package
+      python -m pip install -e simple_package
     displayName: Install packages for app
- 
-  # Install the app in editable mode to install dependencies
-  - bash: pip install -e .
-    displayName: Install packages for app
-    workingDirectory: $(srcDirectory)
+    workingDirectory: src
 
   # Lint via pylint. We need to find all .py files under src/simple_package and run pylint to avoid errors
   - bash: find $(srcDirectory) $(testsDirectory) -type f -name "*.py" | xargs pylint
@@ -98,19 +98,22 @@ jobs:
   - bash: pytest --test-run-title="Python $(pythonVersion)"
     displayName: Run tests
     workingDirectory: $(testsDirectory)
+    
 
-  # Our built source dist & wheel will land in src/simple_package/dist
-  - bash: python setup.py sdist bdist_wheel
-    displayName: Build package
-    workingDirectory: $(srcDirectory)
+  # Install the app in editable mode to install dependencies
+  - bash: |
+      python simple_package/setup.py sdist bdist_wheel
+      python simple_server/setup.py sdist bdist_wheel
+      
+    displayName: Install packages for app
+    workingDirectory: src
 
-  # Upload everything in src/simple_package/dist (including subfolders) to the build artifacts for later use or debugging
   # Add pythonVersion to the artifact name to avoid conflicts and ensure we capture all build output
   - task: PublishPipelineArtifact@0
     displayName: Publish artifacts
     inputs:
       artifactName: dist$(pythonVersion)
-      targetPath: $(srcDirectory)/dist
+      targetPath: src/dist
 
 # If all Build steps for all Python versions have succeeded,
 # we will download one of the already-validated build assets and package it into a container image
@@ -138,7 +141,7 @@ jobs:
     displayName: Download application
     inputs:
       artifact: $(artifactName)
-      path: $(Build.SourcesDirectory)/$(srcDirectory)/dist
+      path: $(Build.SourcesDirectory)/src/dist
 
   # Authenticate to Azure Artifacts
   # This makes the PIP_EXTRA_INDEX_URL Azure DevOps variable / environment var available in future steps
