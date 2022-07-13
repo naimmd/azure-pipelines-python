@@ -154,9 +154,9 @@ jobs:
       docker build \
         --build-arg 'PIP_EXTRA_INDEX_URL=$(PIP_EXTRA_INDEX_URL)' \
         -t $(registryName)/$(imageName):$(Build.BuildNumber) \
-        .
+        modified.dockerfile .
     displayName: Build container image
-    workingDirectory: $(srcDirectory)
+    workingDirectory: src
 
   # Only tag `latest` when the previous Steps are successful and we're building the master branch
   - bash: docker tag $(registryName)/$(imageName):$(Build.BuildNumber) $(registryName)/$(imageName):latest
