@@ -14,8 +14,7 @@ FROM python:3.7-alpine AS builder
 ARG PIP_EXTRA_INDEX_URL
 
 # Copy our application wheel(s) from dist
-COPY simple_server/dist /dist
-COPY simple_package/dist /dist
+COPY dist /dist
 
 
 # Set the PIP_EXTRA_INDEX_URL environment variable for this command, which is used by pip to search for packages
