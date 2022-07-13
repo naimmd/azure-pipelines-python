@@ -80,13 +80,13 @@ jobs:
   # Install the app in editable mode to install dependencies
   - bash: |
       python -m pip install -e simple_package
-      python -m pip install -e simple_package
+      python -m pip install -e simple_server
     displayName: Install packages for app
     workingDirectory: src
 
   # Lint via pylint. We need to find all .py files under src/simple_package and run pylint to avoid errors
-  - bash: find $(srcDirectory) $(testsDirectory) -type f -name "*.py" | xargs pylint
-    displayName: "Linting: pylint"
+  #- bash: find $(srcDirectory) $(testsDirectory) -type f -name "*.py" | xargs pylint
+  #  displayName: "Linting: pylint"
 
   # Lint via flake8. flake8 has better discovery, so we can invoke it directly
   - bash: flake8
