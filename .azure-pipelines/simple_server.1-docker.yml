@@ -164,7 +164,7 @@ jobs:
       docker build \
         --build-arg 'PIP_EXTRA_INDEX_URL=$(PIP_EXTRA_INDEX_URL)' \
         -t $(registryName)/$(imageName):$(Build.BuildNumber) \
-        modified.dockerfile
+        -f modified.dockerfile .
     displayName: Build container image
     workingDirectory: src
 
