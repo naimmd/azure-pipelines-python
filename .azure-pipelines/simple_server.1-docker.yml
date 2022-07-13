@@ -67,16 +67,14 @@ jobs:
     displayName: Authenticate with artifact feed
     inputs:
       artifactFeeds: $(artifactFeed)
-
-      
+ 
   - script: |
       echo '>>>>>>>>>>>>>>>>>>>>>> Contents:'
       ls .
       echo '>>>>>>>>>>>>>>>>>>>>>> pwd:'
       pwd
     workingDirectory: $(srcDirectory)
-
-
+  
   # Install the app in editable mode to install dependencies
   - bash: python -m pip install -e src/simple_package
     displayName: Install packages for app
@@ -155,8 +153,6 @@ jobs:
         echo '>>>>>>>>>>>>>>>>>>>>>> Contents:'
         ls .
       workingDirectory: $(srcDirectory)
-
-
   # Build a container image, passing in the PIP_EXTRA_INDEX_URL from the PipAuthenticate task
   - bash: |
       docker build \
