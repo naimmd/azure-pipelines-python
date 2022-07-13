@@ -152,7 +152,7 @@ jobs:
         pwd
         echo '>>>>>>>>>>>>>>>>>>>>>> Contents:'
         ls .
-      workingDirectory: $(srcDirectory)
+    workingDirectory: $(srcDirectory)
   # Build a container image, passing in the PIP_EXTRA_INDEX_URL from the PipAuthenticate task
   - bash: |
       docker build \
