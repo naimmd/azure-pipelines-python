@@ -73,7 +73,7 @@ jobs:
       ls .
       echo '>>>>>>>>>>>>>>>>>>>>>> pwd:'
       pwd
-    workingDirectory: $(srcDirectory)
+    workingDirectory: src
   
 
 
@@ -104,7 +104,9 @@ jobs:
   # Install the app in editable mode to install dependencies
   - bash: |
       python simple_package/setup.py sdist bdist_wheel
+      ls src/dist
       python simple_server/setup.py sdist bdist_wheel      
+      ls src/dist
     displayName: Build packages
     workingDirectory: src
   
@@ -113,8 +115,10 @@ jobs:
         pwd
         echo '>>>>>>>>>>>>>>>>>>>>>> Contents:'
         ls .
-        echo '>>>>>>>>>>>>>>>>>>>>>> Contents of dist'
-        ls ./dist
+        echo '>>>>>>>>>>>>>>>>>>>>>> Contents of src'
+        ls src
+        ls src/dist
+        
 
 
   # Add pythonVersion to the artifact name to avoid conflicts and ensure we capture all build output
