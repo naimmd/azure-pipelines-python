@@ -155,13 +155,16 @@ jobs:
         pwd
         echo '>>>>>>>>>>>>>>>>>>>>>> Contents:'
         ls .
+        echo '>>>>>>>>>>>>>>>>>>>>>> Contents of dist'
+        ls ./dist
+        
     workingDirectory: src
   # Build a container image, passing in the PIP_EXTRA_INDEX_URL from the PipAuthenticate task
   - bash: |
       docker build \
         --build-arg 'PIP_EXTRA_INDEX_URL=$(PIP_EXTRA_INDEX_URL)' \
         -t $(registryName)/$(imageName):$(Build.BuildNumber) \
-        modified.dockerfile .
+        modified.dockerfile
     displayName: Build container image
     workingDirectory: src
 
