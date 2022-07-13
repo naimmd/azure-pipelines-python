@@ -83,6 +83,7 @@ jobs:
       python -m pip install -e simple_server
     displayName: Install packages for app
     workingDirectory: src
+    
 
   # Lint via pylint. We need to find all .py files under src/simple_package and run pylint to avoid errors
   #- bash: find $(srcDirectory) $(testsDirectory) -type f -name "*.py" | xargs pylint
@@ -103,10 +104,18 @@ jobs:
   # Install the app in editable mode to install dependencies
   - bash: |
       python simple_package/setup.py sdist bdist_wheel
-      python simple_server/setup.py sdist bdist_wheel
-      
-    displayName: Install packages for app
+      python simple_server/setup.py sdist bdist_wheel      
+    displayName: Build packages
     workingDirectory: src
+  
+  - script: |
+        echo '>>>>>>>>>>>>>>>>>>>>>> pwd:'
+        pwd
+        echo '>>>>>>>>>>>>>>>>>>>>>> Contents:'
+        ls .
+        echo '>>>>>>>>>>>>>>>>>>>>>> Contents of dist'
+        ls ./dist
+
 
   # Add pythonVersion to the artifact name to avoid conflicts and ensure we capture all build output
   - task: PublishPipelineArtifact@0
